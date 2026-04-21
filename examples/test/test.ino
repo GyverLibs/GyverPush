@@ -29,10 +29,10 @@ void setup() {
     Serial.println(WiFi.localIP());
 
     // одному
-    push.send("Hello!", "From esp", push_token1, true);
+    push.send_P("Hello!", "From esp", push_token1);
 
     // нескольким
-    // push.send("Hello!", "From esp", tokens, 2, true);
+    // push.send_P("Hello!", "From esp", tokens, 2);
 
     // из файла, разделитель токенов - \n или ;
     // File f = ...
