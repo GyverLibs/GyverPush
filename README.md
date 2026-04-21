@@ -36,7 +36,7 @@
 GyverPush(Client& client);
 
 // настроить на другой сервер
-void setEndpoint(const char* host, uint16_t port, const char* path);
+void config(const char* host, uint16_t port, const char* path);
 
 // отправить одному клиенту
 bool send(const String& title, const String& body, const char* token);

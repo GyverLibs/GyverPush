@@ -28,7 +28,7 @@ My website https://push.gyver.ru/ is available “out of the box” - it both gi
 GyverPush(Client& client);
 
 // configure to another server
-void setEndpoint(const char* host, uint16_t port, const char* path);
+void config(const char* host, uint16_t port, const char* path);
 
 // send to one client
 bool send(const String& title, const String& body, const char* token);

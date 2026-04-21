@@ -7,7 +7,7 @@ class GyverPush {
     GyverPush(Client& client) : _client(client) {}
 
     // настроить на другой сервер
-    void setEndpoint(const char* host, uint16_t port, const char* path) {
+    void config(const char* host, uint16_t port, const char* path) {
         _host = host;
         _port = port;
         _path = path;
