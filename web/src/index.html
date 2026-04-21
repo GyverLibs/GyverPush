@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="icon" href="<%= require('./assets/favicon.svg') %>" type="image/svg+xml">
+  <title>
+    <%= htmlWebpackPlugin.options.title %> v<%= htmlWebpackPlugin.options.version %>
+  </title>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="actions">
+      <button id="subscribe">Subscribe</button>
+      <button id="unsubscribe">Unsubscribe</button>
+    </div>
+
+    <div class="output" id="output">Click to copy</div>
+    <div class="output" id="output_p">Click to copy</div>
+  </div>
+
+  <div id="popup">Copied</div>
+</body>
+
+</html>
