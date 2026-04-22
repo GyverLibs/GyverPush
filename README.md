@@ -34,9 +34,7 @@
 ### Библиотека
 ```cpp
 GyverPush(Client& client);
-
-// настроить на другой сервер
-void config(const char* host, uint16_t port, const char* path);
+GyverPushESP();
 
 // отправить одному клиенту
 bool send(const String& title, const String& body, const char* token);
@@ -81,20 +79,21 @@ push.send_P("Hello!", "From esp", tokens, 2);
 - Сгенерировать VAPID ключи: https://vapidkeys.com/
 - Публичный ключ указать в `package.json` веб-приложения и собрать его через Node.js
 - Оба ключа записать в `push-config.php` и положить его рядом с `push.php`
-- В GyverPush указать свой сервер, порт и путь к php-скрипту
+- В программе указать свой хост, порт и путь к скрипту перед подключением библиотеки или через флаг `-D`
+
+```cpp
+#define GYVER_PUSH_HOST "push.gyver.ru"
+#define GYVER_PUSH_PATH "/push.php"
+#define GYVER_PUSH_PORT 80
+
+#include <GyverPush.h>
+#include <GyverPushESP.h>
+```
 
 ## Примеры
 ```cpp
 #include <Arduino.h>
-
-#ifdef ESP8266
-#include <ESP8266WiFi.h>
-#else
-#include <WiFi.h>
-#endif
-
-#include <GyverPush.h>
-#include <WiFiClient.h>
+#include <GyverPushESP.h>
 
 // токены брать тут https://push.gyver.ru/
 static const char push_token1[] PROGMEM = "";
@@ -105,15 +104,14 @@ const char* tokens[] = {
     push_token2,
 };
 
-WiFiClient client;
-GyverPush push(client);
-
 void setup() {
     Serial.begin(115200);
 
     WiFi.begin("", "");
     WiFi.waitForConnectResult();
     Serial.println(WiFi.localIP());
+
+    GyverPushESP push;
 
     // одному
     push.send_P("Hello!", "From esp", push_token1);

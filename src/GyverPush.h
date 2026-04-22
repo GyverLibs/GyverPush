@@ -2,16 +2,21 @@
 #include <Arduino.h>
 #include <Client.h>
 
+#ifndef GYVER_PUSH_HOST
+#define GYVER_PUSH_HOST "push.gyver.ru"
+#endif
+
+#ifndef GYVER_PUSH_PATH
+#define GYVER_PUSH_PATH "/push.php"
+#endif
+
+#ifndef GYVER_PUSH_PORT
+#define GYVER_PUSH_PORT 80
+#endif
+
 class GyverPush {
    public:
     GyverPush(Client& client) : _client(client) {}
-
-    // настроить на другой сервер
-    void config(const char* host, uint16_t port, const char* path) {
-        _host = host;
-        _port = port;
-        _path = path;
-    }
 
     // отправить одному клиенту
     bool send(const String& title, const String& body, const char* token) {
@@ -71,23 +76,15 @@ class GyverPush {
 
    private:
     Client& _client;
-    const char* _host = "push.gyver.ru";
-    const char* _path = "/push.php";
-    uint16_t _port = 80;
 
     bool _beginRequest() {
-        if (!_client.connect(_host, _port)) return false;
-        String req;
-        req += "POST ";
-        req += _path;
-        req += F(
-            " HTTP/1.1"
-            "\r\nHost: ");
-        req += _host;
-        req += F(
-            "\r\nConnection: close"
-            "\r\nPush-Token: ");
-        _client.print(req);
+        if (!_client.connect(GYVER_PUSH_HOST, GYVER_PUSH_PORT)) return false;
+
+        _client.print(F("POST " GYVER_PUSH_PATH
+                        " HTTP/1.1"
+                        "\r\nHost: " GYVER_PUSH_HOST
+                        "\r\nConnection: close"
+                        "\r\nPush-Token: "));
         return true;
     }
 
